@@ -273,7 +273,9 @@ print(type(weight3))
 print(weight3)  # 50
 ```
 
-# 四：if流程控制
+# 四：流程控制
+
+### 4.1 if流程控制
 
 ```python
 if 条件:
@@ -292,7 +294,49 @@ else:
     ...
 ```
 
-# 五：列表List
+### 4.2 循环
+
+**for循环**
+
+`for` 循环用于迭代序列（即列表、元组、字典、集合或字符串等）。这与其他编程语言中的 `for` 关键字不太相似，而是<font color='red'>**更像其他面向对象编程语言中的迭代器方法：for var in 集合**</font>
+
+```python
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+for var in numbers:
+    print(var)
+```
+
+**while循环**
+
+while循坏同其他语言while类似，while 条件:
+
+```python
+i = 0
+while i < 20:
+    i += 1
+    print(i)
+```
+
+break与continue与其他语言相同：
+
+- break：跳出整个循坏
+- continue：跳过本轮
+
+```python
+# 对 20 以内的偶数求和
+count = 0
+i = 0
+while i < 20:
+    i += 1
+    if i % 2 != 0:
+        continue
+    count += i
+
+print("count = ", count)
+```
+
+# 五：列表List []
 
 ### 5.1 列表概念
 
@@ -459,47 +503,386 @@ eight_immortal.insert(3, '吕洞宾')
 print(eight_immortal)  # ['汉钟离', '张果老', '韩湘子', '吕洞宾', '铁拐李']
 ```
 
-# 六：循环
+# 六：字典 {:}
 
-### 6.1 for循环
+字典：一系列键值对的集合
 
-`for` 循环用于迭代序列（即列表、元组、字典、集合或字符串等）。这与其他编程语言中的 `for` 关键字不太相似，而是<font color='red'>**更像其他面向对象编程语言中的迭代器方法：for var in 集合**</font>
+### 6.1 字典创建语法
 
-```python
-numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+创建字典时，只需要将键值对用花括号`{}` 括起来，每个键值对的键和值之间用冒号 `:` 分隔，每个键值对之间用逗号 `,` 分隔。
 
-for var in numbers:
-    print(var)
-```
-
-### 6.2 while循环
-
-while循坏同其他语言while类似，while 条件:
+==d = {'姓名':'张三', '律师':'罗翔'}==
 
 ```python
-i = 0
-while i < 20:
-    i += 1
-    print(i)
+ne_zha = {'英雄名字': '哪吒', '最大生命': 7268, '生命成长': 270.4, '初始生命': 3483, '最大法力': 1808}
+print(ne_zha)
+print(type(ne_zha))
+
+------------
+
+{'英雄名字': '哪吒', '最大生命': 7268, '生命成长': 270.4, '初始生命': 3483, '最大法力': 1808}
+<class 'dict'>
 ```
 
-break与continue与其他语言相同：
-
-- break：跳出整个循坏
-- continue：跳过本轮
+也可以用==dict构造函数==来创建新字典：
 
 ```python
-# 对 20 以内的偶数求和
-count = 0
-i = 0
-while i < 20:
-    i += 1
-    if i % 2 != 0:
-        continue
-    count += i
+# 注意：1.关键字不是字符串字面量；2.使用了等号而不是冒号来赋值。
+ne_zha = dict(英雄名字='哪吒', 最大生命=7268, 生命成长=270.4)
 
-print("count = ", count)
+print(ne_zha)  #{'英雄名字': '哪吒', '最大生命': 7268, '生命成长': 270.4}
 ```
 
-# 七：字典
 
+
+### 6.2 访问/遍历字典
+
+访问某个key对应的value：
+
+- ==字典名[key]==
+- ==字典名.get(key)==
+- 注意：在创建字典时，当键值重复时，以后加入的键值对为准
+
+```python
+ne_zha['英雄名字']
+ne_zha.get('英雄名字')
+```
+
+遍历字典中所有键名/值名：
+
+- ==for key in 字典:==
+
+```python
+ne_zha = {'英雄名字': '哪吒', '最大生命': 7268, '生命成长': 270.4, '初始生命': 3483, '最大法力': 1808}
+
+for key in ne_zha:
+    print(key)
+    
+for key in ne_zha:
+    print(ne_zha[key])
+```
+
+也可以使用==字典名.values()==函数返回字典的值，
+
+```python
+ne_zha = {'英雄名字': '哪吒', '最大生命': 7268, '生命成长': 270.4, '初始生命': 3483, '最大法力': 1808}
+
+for value in ne_zha.values():
+    print(value)
+```
+
+使用==字典名.items()==访问字典键值对：
+
+```python
+ne_zha = {'英雄名字': '哪吒', '最大生命': 7268, '生命成长': 270.4, '初始生命': 3483, '最大法力': 1808}
+
+for key,value in ne_zha.items():
+    print("key = ", key, "value = ", value)
+```
+
+### 6.3 修改字典
+
+#### 6.3.1 添加项目
+
+==字典名[新key] = value==
+
+```python
+ne_zha = {'英雄名字': '哪吒', '最大生命': 7268, '生命成长': 270.4, '初始生命': 3483, '最大法力': 1808}
+
+ne_zha['最大每5秒回血'] = 98
+print(ne_zha)
+```
+
+#### 6.3.2 删除项目 pop popitem del clear
+
+==字典名.pop(key)==  删除指定key的键值对
+
+```python
+ne_zha = {'英雄名字': '哪吒', '最大生命': 7268, '生命成长': 270.4, '初始生命': 3483, '最大法力': 1808}
+ne_zha.pop('英雄名字')
+```
+
+==字典名.popitem()==  删除最后插入的项目（在 3.7 之前的版本中，删除随机项目）
+
+```python
+ne_zha = {'英雄名字': '哪吒', '最大生命': 7268, '生命成长': 270.4, '初始生命': 3483, '最大法力': 1808}
+ne_zha.popitem()
+```
+
+==del 字典名[键名]==
+
+```python
+ne_zha = {'英雄名字': '哪吒', '最大生命': 7268, '生命成长': 270.4, '初始生命': 3483, '最大法力': 1808}
+del ne_zha['英雄名字']
+```
+
+del也可以完全删除字典，==del 字典==，内容与定义同时删除
+
+```python
+ne_zha = {'name':'na_zha', 'age':18}
+del ne_zha
+print(ne_zha)  # 会报错，因为删除之后 ne_zha 不再存在。
+```
+
+清空字典：==字典名.clear()==，只删除内容
+
+```python
+ne_zha = {'name':'na_zha', 'age':18}
+ne_zha.clear()
+print(ne_zha)  # {}
+```
+
+### 6.4 复制字典
+
+==浅复制：dirct2 = dirct1==，`dict2` 只是对 `dict1` 的引用，而 `dict1` 中的更改也将自动在 `dict2` 中进行
+
+```python
+ne_zha = {'name':'na_zha', 'age':18}
+
+ne_zha_copy = ne_zha
+```
+
+==深复制：dirct2 = dirct1.cpoy()==
+
+```python
+ne_zha = {'name':'na_zha', 'age':18}
+ne_zha_copy = ne_zha.copy
+print(ne_zha_copy)
+```
+
+==拷贝构造：dirct2 = dict(dirct1)==
+
+```python
+ne_zha = {'name':'na_zha', 'age':18}
+ne_zha_copy = dict(ne_zha)
+print(ne_zha_copy)
+```
+
+# 七：元组 ()
+
+元组和列表很像，区别在于元组创建完成后便不能被修改。创建元组很简单，只需要将用逗号分隔的元素放到 `()` 中，`(元素1,元素2,元素3,...,元素n)`，如果元素为字符串，需要添加引号
+
+### 8.0 元组与列表区别
+
+元组与列表相同，也是容器对象，可以存储不同类型的内容。
+
+元组与列表有两个不同点：
+
+- **<font color = 'red'>元组的声明使用小括号，而列表使用方括号，当声明只有一个元素的元组时，需要在这个元素的后面添加英文逗号；</font>**
+- **<font color = 'red'>元组声明和赋值后，不能像列表一样添加、删除和修改元素，也就是说元组在程序运行过程中不能被修改。</font>**
+
+用于列表的排序、替换、添加等方法也不适用于元组，适用于元组的主要运算有元组的合并、遍历、求元组的最大值和最小值等操作方法。
+
+### 7.1 创建元组
+
+==元组名 = (元素1, 元素2, ..., 元素n)==
+
+```python
+loong_son = ('囚牛', '睚眦', '嘲风', '蒲牢', '狻猊', '霸下', '狴犴', '负屃', '螭吻')
+```
+
+注意：<font color = 'blue'>**如果需要创建一个仅包含一个元素的元组，必须在该元素后面添加一个逗号**</font>，否则，Python 无法将变量识别为元组。如下:
+
+![image-20211214174319350](img/Python.img/image-20211214174319350.png)
+
+### 7.2 访问元组
+
+==正索引访问==
+
+```python
+loong_son = ('囚牛', '睚眦', '嘲风', '蒲牢', '狻猊', '霸下', '狴犴', '负屃', '螭吻')
+print(loong_son[0])  #囚牛
+```
+
+==负索引访问==
+
+```python
+loong_son = ('囚牛', '睚眦', '嘲风', '蒲牢', '狻猊', '霸下', '狴犴', '负屃', '螭吻')
+print(loong_son[-1])  #螭吻
+```
+
+==切片访问==
+
+```python
+loong_son = ('囚牛', '睚眦', '嘲风', '蒲牢', '狻猊', '霸下', '狴犴', '负屃', '螭吻')
+
+print(loong_son[1:])  # 访问下标1到最后（包括最后一个）
+print(loong_son[:3])  # 访问从开始到3下标（不包括下标为3的）
+print(loong_son[:])   # 访问所有
+print(loong_son[-3:-1])  # 访问倒数第三个到倒数第一个（不包括倒数第一个）
+print(loong_son[-3:])    # 访问倒数第三个到最后（包括最后一个）
+print(loong_son[:-1])    # 访问从开始到倒数第一个（不包括倒数第一个）
+```
+
+==遍历元组==
+
+```python
+loong_son = ('囚牛', '睚眦', '嘲风', '蒲牢', '狻猊', '霸下', '狴犴', '负屃', '螭吻')
+
+for elem in loong_son:
+    print(elem)
+```
+
+### 7.3 无法修改的特性
+
+元组在创建完成后便不能被修改！因此任何关于修改元组的操作都会报错，比如添加新元素到元组中，或者是删除元组中的某些元素
+
+元组是不可改变的，因此无法从中删除元素，但可以删除整个元组。
+
+```python
+loong_son = ('囚牛', '睚眦', '嘲风', '蒲牢', '狻猊', '霸下', '狴犴', '负屃', '螭吻')
+del loong_son  # 删除整个元组
+```
+
+元组的不可修改特性可能会让元组变得非常不灵活，因为元组作为容器对象，很多时候需要对容器的元素进行修改，这在元组中是不允许的。
+
+元组可以说是列表数据的一种补充，数据的不可修改性在程序设计中也是非常重要的。例如，当需要将数据作为参数传递给API，但不希望API修改参数时，就可以传递一个元组类型；再如，当需要定义一组Key时，也可以采用元组类型。因此可以说元组和列表是互为补充的数据类型。
+
+### 7.4 合并元组
+
+元组不能被修改，但是两个元组是可以合并成一个新的元组的，在 Python 中，使用==+运算符可以连接两个或多个元组==，语句如下：
+
+```python
+loong_son1 = ('囚牛', '睚眦', '嘲风', '蒲牢', '狻猊')
+loong_son2 = ('霸下', '狴犴', '负屃', '螭吻')
+
+loong_son = loong_son1 + loong_son2
+print(loong_son)
+```
+
+# 八：集合 {}
+
+集合是==无序==元素的集合，集合中的元素==不可重复==，并且创建完成后，其中的元素不可更改。但是整个集合是可以更改的，我们可以向其增加元素，也可以从中删除元素。也就是说，<font color='blue'>**我们无法修改集合中的元素，但是我们可以对整个集合进行添加或者是删除等更改的操作**</font>。
+
+### 8.0 列表、元组、集合区别
+
+- 列表：[]扩起来，有序可重复，可用下标访问，可以增删改
+
+- 元组：()扩起来，有序可重复，可用下标访问，不可增删改，
+
+- 集合：{}扩起来，无序不可重复，不可用下标访问，可增删，不可修改单个元素值
+
+### 8.1 集合创建
+
+{元素1, 元素2, 元素3, ..., 元素n}
+
+```python
+Set = {'飞狐外传', '神雕侠侣'} #集合
+```
+
+注意：集合中的元素不可重复，如果有重复元素，重复的元素将被忽略。（<font color='red'>**列表和元组可以重复**</font>）
+
+![image-20211217101534790](img/Python.img/image-20211217101534790.png)
+
+### 8.2 访问集合元素 for、in
+
+集合中的元素是无序的，无法用索引进行访问，可以==通过 `for` 循环来遍历集合==的元素，另外，还可以==使用 `in` 关键字来判断集合中是否存在某个元素==
+
+**for循环**
+
+```python
+novels = {'飞狐外传', '雪山飞狐', '连城诀', '天龙八部'}
+
+for novel in novels:
+    print(novel)
+```
+
+**in关键字**
+
+```python
+novels = {'飞狐外传', '雪山飞狐', '连城诀', '天龙八部'}
+
+print('飞狐外传' in novels)  #True
+print('封神榜' in novels)  #False
+```
+
+### 8.3 集合修改
+
+#### 8.3.1 添加元素 add update
+
+添加一个元素：==集合名.add(元素名)==
+
+添加多个元素：==集合名.update({元素1,元素2,...,元素n})==
+
+```python
+nums = {'one', 'two'}
+
+nums.add('three')
+print(nums)  #{'three', 'one', 'two'}
+
+nums.update({'four', 'five', 'six'})
+print(nums)  #{'five', 'three', 'one', 'two', 'four', 'six'}
+```
+
+#### 8.3.2 删除元素 discard remove
+
+- ==集合名.discard(元素)==，从集合中删除一个不存在的元素时，`discard()` 不会执行任何操作
+
+- ==集合名.remove(元素)==，从集合中删除一个不存在的元素时， `remove()` 会抛出一个异常。
+- 这两个函数的区别在于，从集合中删除一个不存在的元素时，`discard()` 不会执行任何操作，而 `remove()` 会抛出一个异常。
+
+```python
+novels = {'飞狐外传', '雪山飞狐', '连城诀', '天龙八部'}
+
+novels.discard('飞狐外传')
+
+novels.remove('雪山飞狐')
+```
+
+当删除不存在的元素时：
+
+```python
+novels = {'飞狐外传', '雪山飞狐', '连城诀', '天龙八部'}
+
+novels.discard('越女剑')  # 不会执行任何操作
+
+novels.remobe('越女剑')  #会抛出一个异常: KeyError: '越女剑'
+```
+
+### 8.4 集合操作  并|  交&  差-  对称差集^
+
+并：==集合1.union(集合2)、|==
+
+```python
+nums1 = {'one', 'two'}
+nums2 = {'three', 'four'}
+
+print(nums1.union(nums2))  #{'three', 'one', 'two', 'four'}
+print(nums1 | nums2)  #{'three', 'one', 'two', 'four'}
+```
+
+交：==集合1.intersection(集合2)、&==
+
+```python
+nums1 = {'one', 'two', 'zero'}
+nums2 = {'zero', 'three', 'four'}
+
+print(nums1.intersection(nums2))  #{'zero'}
+print(nums1 & nums2)  #{'zero'}
+```
+
+差：==集合1.difference(集合2)、-==
+
+```python
+nums1 = {'one', 'two', 'zero'}
+nums2 = {'zero', 'three', 'four'}
+
+print(nums1.intersection(nums2))  #{'two', 'one'}  #属于集合1不属于集合2的元素
+print(nums1 & nums2)  #{'two', 'one'}
+```
+
+**对称差集：属于集合 A，不属于集合 B 的以及属于集合 B 不属于集合 A 的元素集合，就是**<font color='blue'>**集合 A 与集合 B 的并集减去集合 A 与集合 B 的交集**</font>
+
+<img align='left' src="img/Python.img/image-20211217105846343.png" alt="image-20211217105846343" style="zoom:40%;" />
+
+对称差集：==集合1.symmetric_difference(集合2)、^==
+
+```python
+nums1 = {'one', 'two', 'zero'}
+nums2 = {'zero', 'three', 'four'}
+
+print(nums1.symmetric_difference(nums2))  #{'two', 'one', 'three', 'four'}
+print(nums1 ^ nums2)  #{'two', 'one', 'three', 'four'}
+```
+
+# 九：函数
