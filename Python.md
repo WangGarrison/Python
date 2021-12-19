@@ -886,3 +886,324 @@ print(nums1 ^ nums2)  #{'two', 'one', 'three', 'four'}
 ```
 
 # 九：函数
+
+> 为什么需要函数：抽象，代码复用，模块化
+
+<font color = 'green'>**函数定义**</font>：==def 函数名(参数):==
+
+<font color='red'>**（Python是弱数据类型的语言，在函数定义的时候不需要声明返回值类型）**</font>
+
+```python
+def greet():
+    print("大禹治水")
+
+greet()
+```
+
+<font color = 'green'>**参数位置可以不固定**</font>：python函数在参数传递的时候，除了常规的参数传递外，还可以==在传递值的时候，带上参数的名字==，具体形式为 `keyword = value`，这里的 `keyword` 必须匹配上一个函数定义中的参数名，也就是说是 `参数名1=值1`，`参数名2=值2`，`参数名3=值3` 这种形式。 ==指定名字后，调用函数的时候参数位置可以不固定==
+
+虽然顺序可以不用保持一致，但是值的个数还需要和参数的个数保持相同。不同的话会报错。
+
+```python
+def cal(qty, item,price):
+    print(f'{qty} {item} cost ${price:.2f}')
+
+cal(2, 'apples', 8.18)  #2 apples cost $8.18
+cal(qty=6, item='bananas', price=5.74)  #6 bananas cost $5.74
+cal(item='bananas', price=5.74, qty=6)  #6 bananas cost $5.74
+```
+
+<font color = 'green'>**默认参数**</font>：指定默认值之后，在调用函数时如果没有指定某个参数的值，就用参数的默认值
+
+```python
+def cal(qty=6, item='bananas', price=5.74):
+    print(f'{qty} {item} cost ${price:.2f}')
+
+cal()  #6 bananas cost $5.74
+cal(3) #3 bananas cost $5.74
+cal(price=10.0)  #6 bananas cost $10.00
+```
+
+<font color='green'>**return语句**</font>： 立即结束本函数的执行，将程序的执行控制权交还给调用者/ 返回数据给调用者。
+
+```python
+# 求任意数字的绝对值函数
+def absolute_value(num):
+    if num >= 0:
+        return num
+    else:
+        return -num
+
+
+print(absolute_value(2))
+print(absolute_value(-4))
+```
+
+没有写return语句的话，默认返回None
+
+```python
+def test():
+    print('没有返回值')
+
+a = test()
+print(a)
+```
+
+# 十：类和对象
+
+### 10.0 关于下划线的说明
+
+- **\_\_foo__**：定义的是特殊方法，一般是系统定义名字 ，类似 **\_\_init__()** 之类的。
+- **_foo**:：以单下划线开头的表示的是 protected 类型的变量，即保护类型只能允许其本身与子类进行访问，不能用于 **from module import \***
+- **__foo**：双下划线的表示的是私有类型(private)的变量, 只能是允许这个类本身进行访问了。
+
+### 10.1 类的创建
+
+==class 类名:==
+
+```python
+class Bird:
+    # 对象初始化方法
+    def __init__(self, n, c, s):
+        self.name = n
+        self.color = c
+        self.size = s
+    
+    # 类方法
+    def get_description(self):
+        description = f'{self.name} {self.color} {self.size}'
+        print(description)
+```
+
+ **==\__init__()方法==**
+
+```python
+class Bird:
+    def __init__(self, n, c, s):
+    #对象初始化语句
+        self.name = n   #添加一个name属性
+        self.color = c
+        self.size = s
+```
+
+<img align='left' src="img/Python.img/image-20211219103059947.png" alt="image-20211219103059947" style="zoom: 33%;" />
+
+类中的函数称作方法，类的方法与普通的函数只有一个特别的区别：它们必须有一个额外的**第一个参数名称**, 按照惯例它的名称是 self。
+
+`__init__()` 是一个特殊的方法，==每当我们实例化一个对象时，这个方法都会自动执行。方法名的开头为两个下划线，结尾同样为两个下划线==，这种命名的习惯主要是为了区分 Python 默认的方法名和我们自己定义的方法名。
+
+`def __init__(self, n, c, s):` 语句中，参数 self 表示对象自身，代表实例化对象的引用。参数n, c, s则表示对象的属性，在我们创建的类 `Bird` 中就是表示，每一种鸟的具象化特征，比如鹦鹉、绿色、中等大小，==因此 __init__() 方法的作用是为对象的属性赋值==
+
+**<font color='blue'>参数 self 是必须的，并且要位于其他参数的前面</font>**。在方法的定义中，之所以要必须包含 self 参数，是因为当实例化对象时，会自动调用 `__init__()` 方法，并且自动传入参数 self。<font color='red'>**每个方法都可以包含一个会自动传入的参数 self，这个参数是实例化对象的引用。这样方法便可以访问对象的属性和方法**</font>。在实例化对象时，由于 self 参数自动传入的，所以只需要传入其他参数的值。
+
+添加类属性
+
+### 10.2 对象
+
+类是抽象的，对象是对类进行具象的实例化
+
+```python
+#创建类Bird
+class Bird:
+
+    #对象初始化语句
+    def __init__(self, n, c, s):
+        self.name = n
+        self.color = c
+        self.size = s
+
+     #定义方法get_description，参数为self，自动传入
+    def get_description(self):
+        description = f'{self.name} {self.color} {self.size} '
+        print(description)
+
+#实例化对象my_bird，为my_bird赋予属性'鹦鹉', '绿色', '中等大小'
+my_bird = Bird('鹦鹉', '绿色', '中等大小')
+```
+
+通过==对象名.属性名/方法名==的方式来访问属性与方法：
+
+```python
+my_bird = Bird('鹦鹉', '绿色', '中等大小')
+print(my_bird.size)
+my_bird.get_description()
+```
+
+==为属性设置默认值：在\__init__方法中为属性赋值即可==
+
+```python
+class Bird:
+    def __init__(self, n, c, s):
+        self.name = n
+        self.color = c
+        self.size = s
+         #设置属性age的默认值为1
+        self.age = 1
+```
+
+### 10.3 继承
+
+==class 子类名(父类名)==
+
+在实例化子类的对象时，首先要为父类中的属性赋值，对父类属性的赋值可以使用父类的 `__init__()` 方法。==super()函数是用于调用父类的一个方法==
+
+```python
+class Bird:
+    '类文档字符串'
+    def __init__(self, n, c, s):
+        self.name = n
+        self.color = c
+        self.size = s
+        self.age = 1
+
+class Penguin(Bird):  #继承Bird类
+    def __init__(self, n, c, s):
+        super().__init__(n, c, s)  #使用父类的__init__方法为父类中的属性赋值
+```
+
+### 10.4 方法重写
+
+如果从父类继承的方法不能满足子类的需求，可以对其进行改写，这个过程叫方法的覆盖（override），也称为方法的重写。
+
+```python
+class Parent:        # 定义父类
+   def myMethod(self):
+      print '调用父类方法'
+ 
+class Child(Parent): # 定义子类
+   def myMethod(self):
+      print '调用子类方法'
+ 
+c = Child()          # 子类实例
+c.myMethod()         # 子类调用重写方法
+```
+
+### 10.5 对象销毁/垃圾回收
+
+Python 使用了==引用计数==这一简单技术来跟踪和回收垃圾。在 Python 内部记录着所有使用中的对象各有多少引用。
+
+一个内部跟踪变量，称为一个引用计数器。
+
+当对象被创建时， 就创建了一个引用计数， 当这个对象不再需要时， 也就是说， 这个对象的引用计数变为0 时， 它被垃圾回收。但是回收不是"立即"的， 由解释器在适当的时机，将垃圾对象占用的内存空间回收。
+
+```python
+a = 40      # 创建对象  <40>
+b = a       # 增加引用， <40> 的计数
+c = [b]     # 增加引用.  <40> 的计数
+
+del a       # 减少引用 <40> 的计数
+b = 100     # 减少引用 <40> 的计数
+c[0] = -1   # 减少引用 <40> 的计数
+```
+
+### 10.6 私有、保护、公有
+
+==私有属性/方法：两个下划线开头==，声明该属性为私有，不能在类的外部被使用或直接访问。在类内部的方法中使用时通过self调用
+
+```python
+class JustCounter:
+    __secretCount = 0  # 私有变量
+    publicCount = 0    # 公开变量
+ 
+    def count(self):
+        self.__secretCount += 1
+        self.publicCount += 1
+        print self.__secretCount
+ 
+counter = JustCounter()
+counter.count()
+print counter.publicCount
+print counter.__secretCount  # 报错，实例不能访问私有变量
+```
+
+Python不允许实例化的类访问私有数据，但你可以使用 **object._className__attrName**（ **对象名._类名__私有属性名** ）访问属性，参考以下实例：
+
+```python
+class Runoob:
+    __site = "www.runoob.com"
+
+runoob = Runoob()
+print(runoob._Runoob__site)  #可以打印成功
+```
+
+==保护属性/方法：一个下划线开头==，声明该属性为保护，即保护类型只能允许其本身与子类进行访问，不能用于 **from module import \***
+
+==公有属性/方法：不加下划线开头==
+
+### 10.7 Python内置的类的属性
+
+- \__dict__ : 类的属性（包含一个字典，由类的数据属性组成）
+- \__doc__ :类的文档字符串
+- \_\_name__: 类名
+- \__module\_\_: 类定义所在的模块（类的全名是'__main__.className'，如果类位于一个导入模块mymod中，那么className.__module__ 等于 mymod）
+- \__bases__ : 类的所有父类构成元素（包含了一个由所有父类组成的元组）
+
+```python
+#!/usr/bin/python3
+# -*- coding: UTF-8 -*-
+
+class Employee:
+    '所有员工的基类'
+    empCount = 0
+
+    def __init__(self, name, salary):
+        self.name = name
+        self.salary = salary
+        Employee.empCount += 1
+
+    def displayCount(self):
+        print("总共员工数量为：", empCount)
+
+print("类的属性：", Employee.__dict__, '\n')
+print("类的文档字符串：", Employee.__doc__, '\n')
+print("类名：", Employee.__name__, '\n')
+print("类定义所在的模块：", Employee.__module__, '\n')
+print("类的所有父类构成元素：", Employee.__bases__, '\n')
+```
+
+运行结果如下：
+
+![image-20211219113509941](img/Python.img/image-20211219113509941.png)
+
+### 10.8 析构函数
+
+\__del\_\_在对象销毁的时候被调用
+
+```python
+class Point:
+   def __init__( self, x=0, y=0):
+      self.x = x
+      self.y = y
+   def __del__(self):
+      class_name = self.__class__.__name__
+      print class_name, "销毁"
+```
+
+### 10.9 运算符重载
+
+Python同样支持运算符重载，实例如下：
+
+```python
+def __运算符__(self, other):
+    语句块	
+```
+
+```python
+class Vector:
+   def __init__(self, a, b):
+      self.a = a
+      self.b = b
+ 
+   def __str__(self):
+      return 'Vector (%d, %d)' % (self.a, self.b)
+   
+   def __add__(self,other):
+      return Vector(self.a + other.a, self.b + other.b)
+ 
+v1 = Vector(2,10)
+v2 = Vector(5,-2)
+print(v1+v2)  #输出Vector(7, 8)
+```
+
+# 十一：模块和包
+
