@@ -95,3 +95,5 @@ print(re.search('com', 'www.runoob.com').span())  # (11, 14)
 
 **re.match与re.search的区别：**re.match 只匹配字符串的开始，如果字符串开始不符合正则表达式，则匹配失败，函数返回 None，而 re.search 匹配整个字符串，直到找到一个匹配。
 
+
+
